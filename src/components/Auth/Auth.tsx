@@ -53,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
             <Text fontSize={"3xl"}>Messanger</Text>
             <Button
               onClick={() => signIn("google")}
-              leftIcon={<Image height="20px" src="/images/googlelogo.png" />}
+              leftIcon={<Image alt="google" height="20px" src="/images/googlelogo.png" />}
             >
               Continue with Google
             </Button>
