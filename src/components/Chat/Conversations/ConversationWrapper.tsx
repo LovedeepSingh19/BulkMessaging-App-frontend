@@ -1,4 +1,4 @@
-import { Box, Button } from "@chakra-ui/react";
+import { Box, Button, Text } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import React, { useEffect, useState } from "react";
 import { Interface } from "readline";
@@ -73,6 +73,25 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
       py={6}
       px={3}
     >
+      <Box
+  bg="whiteAlpha.50"
+  borderRadius={8}
+  >
+<Text
+  fontSize={"34"}
+  fontWeight="bold"
+  align={'center'}
+  justifyContent={'center'}
+  fontStyle="italic"
+  bgGradient="linear(to-r, #4FC0D0, #164B60)"
+  backgroundClip="text"
+  color="transparent"
+  letterSpacing="wide"
+>
+  SwiftLink
+</Text>
+</Box>
+
       {!items ? (
         <SkeletonLoader count={10} height={"100%"} />
       ) : (
