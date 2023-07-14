@@ -1,6 +1,16 @@
-import '@/styles/globals.css'
+import { theme } from '@/chakra/theme'
+import { client } from '@/graphql/apollo-client'
+import { ApolloProvider } from '@apollo/client'
+import { ChakraProvider } from '@chakra-ui/react'
+import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
+  return (
+    <SessionProvider session={session}>
+      <ChakraProvider theme={theme}>
+        <Component {...pageProps} />
+      </ChakraProvider>
+    </SessionProvider>
+  )
 }
