@@ -20,10 +20,11 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(`${process.env.NEXT_PUBLIC_TEMP_UR}`)
       try {
         if (counter < 3) {
           const response = await axios.post(
-            "http://localhost:8080/getcontacts",
+            "https://backend-bulk-message-app.vercel.app/getcontacts",
             { uid: session.user?.email! },
             { headers: { "Content-Type": "application/json" } }
           );
@@ -45,7 +46,7 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   const onDeleteitem = async (id: string) => {
     console.log(id);
     try {
-      const response = await axios.post("http://localhost:8080/delete", {
+      const response = await axios.post("https://backend-bulk-message-app.vercel.app/delete", {
         uid: id,
       });
       const data = response.data;

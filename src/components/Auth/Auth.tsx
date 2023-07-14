@@ -24,7 +24,7 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
             emailVerified: false,
         }
         const response = await axios.post(
-            "http://localhost:8080/userUpdate",
+            "https://backend-bulk-message-app.vercel.app/userUpdate",
             { user: NewUser }
           );
           console.log(response.data)
