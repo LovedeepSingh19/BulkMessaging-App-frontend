@@ -1,0 +1,12 @@
+{
+    "builds": [
+      { "src": "prisma/*", "use": "@prisma/cli" },
+      { "src": "next.config.js", "use": "@vercel/next" },
+      { "src": "public/**/*", "use": "@vercel/static" }
+    ],
+    "routes": [
+      { "handle": "filesystem" },
+      { "src": "/.*", "dest": "/index.html" }
+    ]
+  }
+  

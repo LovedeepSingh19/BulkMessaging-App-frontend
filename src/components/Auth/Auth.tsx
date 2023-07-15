@@ -23,13 +23,15 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
             image: session?.user.image!,
             emailVerified: false,
         }
-        console.log(NewUser)
+
         const response = await axios.post(
             "https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/userUpdate",
             { user: NewUser }
           );
           console.log(response.data)
-          window.location.reload();
+          reloadSession();
+          
+          // window.location.reload();
         
     } catch (error) {
         console.log("OnSubmitError: ", error)
