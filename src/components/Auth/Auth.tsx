@@ -23,8 +23,9 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
             image: session?.user.image!,
             emailVerified: false,
         }
+        console.log(NewUser)
         const response = await axios.post(
-            "https://vercel.live/link/backend-bulk-message-app-git-main-lovedeepsingh19.vercel.app?via=deployment-domains-list-branch/userUpdate",
+            "https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/userUpdate",
             { user: NewUser }
           );
           console.log(response.data)

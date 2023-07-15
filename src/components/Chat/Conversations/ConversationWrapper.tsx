@@ -24,7 +24,7 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
       try {
         if (counter < 3) {
           const response = await axios.post(
-            "https://vercel.live/link/backend-bulk-message-app-git-main-lovedeepsingh19.vercel.app?via=deployment-domains-list-branch/getcontacts",
+            "https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/getcontacts",
             { uid: session.user?.email! },
             { headers: { "Content-Type": "application/json" } }
           );
@@ -46,7 +46,7 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   const onDeleteitem = async (id: string) => {
     console.log(id);
     try {
-      const response = await axios.post("https://vercel.live/link/backend-bulk-message-app-git-main-lovedeepsingh19.vercel.app?via=deployment-domains-list-branch/delete", {
+      const response = await axios.post("https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/delete", {
         uid: id,
       });
       const data = response.data;
