@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider, gql, HttpLink } from '@apollo/client';
 
 const httpLink = new HttpLink({
-    uri: "https://backend-bulk-message-app.vercel.app/graphql",
+    uri: "http://localhost:8080/graphql",
     credentials: "include"
 })
 

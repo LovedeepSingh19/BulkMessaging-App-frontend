@@ -17,7 +17,7 @@ const [messages, setMessages] = useState(Array<SendMessageVariables>);
 useEffect(() => {
   const fetchMessages = async () => {
     try {
-      const response = await axios.get("https://backend-bulk-message-app.vercel.app/fetchMessages", {
+      const response = await axios.get("http://localhost:8080/fetchMessages", {
         params: {
           createdBy: session.user.email,
         },

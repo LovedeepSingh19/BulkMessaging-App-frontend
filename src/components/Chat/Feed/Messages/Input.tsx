@@ -73,7 +73,7 @@ const MessageInput = ({
 
 
       const response = await axios.post(
-        "https://backend-bulk-message-app.vercel.app/sendMessage",
+        "http://localhost:8080/sendMessage",
         {
           message: NewMessage,
         },
