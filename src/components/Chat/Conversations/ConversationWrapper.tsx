@@ -24,7 +24,7 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
       try {
         if (counter < 3) {
           const response = await axios.post(
-            "https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/getcontacts",
+            "https://backend-bulk-message.onrender.com/getcontacts",
             { uid: session.user?.email! },
             { headers: { "Content-Type": "application/json" } }
           );
@@ -46,9 +46,10 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   const onDeleteitem = async (id: string) => {
     console.log(id);
     try {
-      const response = await axios.post("https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/delete", {
+      const response = await axios.post("https://backend-bulk-message.onrender.com/delete", {
         uid: id,
-      });
+      },
+      { headers: { "Content-Type": "application/json" } });
       const data = response.data;
       // setTempItems(data);
       const index = items.findIndex(

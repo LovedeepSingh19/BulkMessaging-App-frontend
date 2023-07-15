@@ -84,9 +84,10 @@ const ConversationModal: React.FC<ConversationModalProps> = ({
 
   const onSubmit = async (event: React.FormEvent) => {
     try {
-      const response = await axios.post('https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/manual-contacts', {
+      const response = await axios.post('https://backend-bulk-message.onrender.com/manual-contacts', {
         participants
-      });
+      },
+      { headers: { "Content-Type": "application/json" } });
       console.log(response.data);
       window.location.reload();
     } catch (error) {

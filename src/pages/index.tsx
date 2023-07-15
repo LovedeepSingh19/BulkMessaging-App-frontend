@@ -17,11 +17,11 @@ export default function Home() {
     document.dispatchEvent(event);
   };
 
-  // useEffect(() => {
-  //   if (!session?.user) {
-  //     router.replace(process.env.NEXT_PUBLIC_BASE_URL as string);
-  //   }
-  // }, [session?.user?.phoneNumber]);
+  useEffect(() => {
+    if (!session?.user) {
+      // router.replace(process.env.NEXT_PUBLIC_BASE_URL as string);
+    }
+  }, [session?.user?.phoneNumber]);
 
   return (
     <Box>{session?.user?.phoneNumber ? <Chat session={session} /> : <Auth session={session} reloadSession={reloadSession} />}</Box>

@@ -25,8 +25,9 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
         }
 
         const response = await axios.post(
-            "https://backend-bulk-message-ku85kngjn-lovedeepsingh19.vercel.app/userUpdate",
-            { user: NewUser }
+            "https://backend-bulk-message.onrender.com/userUpdate",
+            { user: NewUser },
+            { headers: { "Content-Type": "application/json" } }
           );
           console.log(response.data)
           reloadSession();
