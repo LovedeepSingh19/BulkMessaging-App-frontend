@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "engines": {
+    "node": ">=16"
+  },
   "dependencies": {
     "@apollo/client": "^3.7.17",
     "@auth/prisma-adapter": "^1.0.1",
