@@ -35,6 +35,9 @@ const ConversationModal: React.FC<ConversationModalProps> = ({
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
   const [isSecondModalOpen, setSecondModalOpen] = useState(false);
 
   const [participants, setParticipants] = useState<Array<SearchedUser>>([]);
@@ -84,7 +87,7 @@ const ConversationModal: React.FC<ConversationModalProps> = ({
 
   const onSubmit = async (event: React.FormEvent) => {
     try {
-      const response = await axios.post('https://backend-bulk-message.onrender.com/manual-contacts', {
+      const response = await axios.post(`${apiUrl}/manual-contacts`, {
         participants
       },
       { headers: { "Content-Type": "application/json" } });
@@ -115,7 +118,7 @@ const ConversationModal: React.FC<ConversationModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent bg="#2d2d2d" pb={4}>
+        <ModalContent bg="#2d2d2d" pb={4} width={'90%'}>
           <ModalHeader>Enter Details Manually</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -160,10 +163,11 @@ const ConversationModal: React.FC<ConversationModalProps> = ({
             )}
               <Text
                 textAlign={"center"}
-                ml={120}
-                mr={120}
+                // ml={120}
+                // mr={120}
                 fontWeight={400}
-                fontSize={13}
+                fontSize={{base:11, sm:13}}
+                flexWrap={{base:"wrap", sm:"nowrap"}}
                 onClick={onClickCSV}
                 _hover={{ cursor: "pointer", color: "gray.300" }}
               >

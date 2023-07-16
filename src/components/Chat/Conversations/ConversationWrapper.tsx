@@ -10,64 +10,20 @@ import { GetSearchedUser } from "@/util/types";
 
 interface ConversationWrapperProps {
   session: Session;
+  items: Array<GetSearchedUser>;
+  onDeleteitem: (id: string) => Promise<void>;
 }
 
 const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   session,
+  items,
+  onDeleteitem,
 }) => {
-  const [items, setItems] = useState([]);
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      console.log(`${process.env.NEXT_PUBLIC_TEMP_UR}`)
-      try {
-        if (counter < 3) {
-          const response = await axios.post(
-            "https://backend-bulk-message.onrender.com/getcontacts",
-            { uid: session.user?.email! },
-            { headers: { "Content-Type": "application/json" } }
-          );
-          const data = response.data;
-          setItems(data);
-          console.log(items);
-          setCounter((prevCounter) => prevCounter + 1); // Increment the counter
-        }
-      } catch (error) {
-        console.error("Error fetching items:", error);
-      }
-    };
-
-    fetchData();
-  }, [counter]);
-
   // setTempItems(items)
-
-  const onDeleteitem = async (id: string) => {
-    console.log(id);
-    try {
-      const response = await axios.post("https://backend-bulk-message.onrender.com/delete", {
-        uid: id,
-      },
-      { headers: { "Content-Type": "application/json" } });
-      const data = response.data;
-      // setTempItems(data);
-      const index = items.findIndex(
-        (element: GetSearchedUser) => element.email === id
-      );
-      if (index !== -1) {
-        const updatedItems = [...items];
-        updatedItems.splice(index, 1);
-        setItems(updatedItems);
-      }
-    } catch (error) {
-      console.error("Error Deleting items:", error);
-    }
-  };
 
   return (
     <Box
-      display={"flex"}
+      display={{ base: "none", sm: "flex" }}
       width={{ base: "100%", md: "430px" }}
       flexDirection="column"
       bg="whiteAlpha.50"
@@ -75,24 +31,21 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
       py={6}
       px={3}
     >
-      <Box
-  bg="whiteAlpha.50"
-  borderRadius={8}
-  >
-<Text
-  fontSize={"34"}
-  fontWeight="bold"
-  align={'center'}
-  justifyContent={'center'}
-  fontStyle="italic"
-  bgGradient="linear(to-r, #4FC0D0, #164B60)"
-  backgroundClip="text"
-  color="transparent"
-  letterSpacing="wide"
->
-  SwiftLink
-</Text>
-</Box>
+      <Box bg="whiteAlpha.50" borderRadius={8}>
+        <Text
+          fontSize={"34"}
+          fontWeight="bold"
+          align={"center"}
+          justifyContent={"center"}
+          fontStyle="italic"
+          bgGradient="linear(to-r, #4FC0D0, #164B60)"
+          backgroundClip="text"
+          color="transparent"
+          letterSpacing="wide"
+        >
+          SwiftLink
+        </Text>
+      </Box>
 
       {!items ? (
         <SkeletonLoader count={10} height={"100%"} />

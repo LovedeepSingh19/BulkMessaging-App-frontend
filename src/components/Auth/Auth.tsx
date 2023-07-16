@@ -13,6 +13,9 @@ interface AuthProps {
 const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
   const onSubmit = async () => {
     try {
 
@@ -25,14 +28,13 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
         }
 
         const response = await axios.post(
-            "https://backend-bulk-message.onrender.com/userUpdate",
+          `${apiUrl}/userUpdate`,
             { user: NewUser },
             { headers: { "Content-Type": "application/json" } }
           );
           console.log(response.data)
           reloadSession();
           
-          // window.location.reload();
         
     } catch (error) {
         console.log("OnSubmitError: ", error)

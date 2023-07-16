@@ -1,7 +1,6 @@
 import { SendMessageVariables } from "@/util/types";
 import { Box, Flex, FormLabel, HStack, Input, InputGroup, InputRightElement, Spinner, Stack, Switch } from "@chakra-ui/react";
 import axios from "axios";
-import { Http2ServerResponse } from "http2";
 import { Session } from "next-auth";
 import QRCode from 'qrcode';
 import { useEffect, useState } from "react";
@@ -27,6 +26,9 @@ const MessageInput = ({
   const [qrCodeData, setQRCodeData] = useState('');
   const [qrCodeImage, setQRCodeImage] = useState('');
   const [loading, setloading] = useState(false);
+
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
 
   useEffect(() => {
@@ -73,7 +75,7 @@ const MessageInput = ({
 
 
       const response = await axios.post(
-        "https://backend-bulk-message.onrender.com/sendMessage",
+        `${apiUrl}/sendMessage`,
         {
           message: NewMessage,
         },
