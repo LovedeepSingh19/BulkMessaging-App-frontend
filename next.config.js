@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  // reactStrictMode: true,
     
     baseUrl: 'https://bulk-messaging-app-frontend.vercel.app/',
 
