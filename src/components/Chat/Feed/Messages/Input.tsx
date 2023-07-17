@@ -205,7 +205,13 @@ const MessageInput = ({
           </HStack>
           {qrCodeImage && (
             <Flex>
-              <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+              <Modal
+                isOpen={isOpen}
+                onClose={() => {
+                  setIsOpen(false);
+                  setloading(false);
+                }}
+              >
                 <ModalOverlay />
                 <ModalContent>
                   <ModalHeader>Modal Title</ModalHeader>
