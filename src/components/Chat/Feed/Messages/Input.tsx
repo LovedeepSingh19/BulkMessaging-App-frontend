@@ -101,26 +101,32 @@ const MessageInput = ({
 
       if (response.data && NewMessage.whatsApp) {
         console.log(response.data);
-        const { phones, messages, qr } = response.data;
+        const { qr } = response.data;
 
         setQRCodeData(qr);
-        try {
-          await axios
-            .post(
-              `${apiUrl}/qr-whatsApp`,
-              {
-                phones: phones,
-                messages: messages,
-              },
-              { headers: { "Content-Type": "application/json" } }
-            )
-            .then(() => {
-              setIsOpen(false);
-              setQRCodeData("");
-            });
-        } catch (error: any) {
-          console.log("WhatsApp Error: " + error.response.data.error);
-        }
+
+        setTimeout(() => {
+          // Perform your task here
+          setIsOpen(false);
+          setQRCodeData("");
+        }, 10000);
+        // try {
+        //   await axios
+        //     .post(
+        //       `${apiUrl}/qr-whatsApp`,
+        //       {
+        //         phones: phones,
+        //         messages: messages,
+        //       },
+        //       { headers: { "Content-Type": "application/json" } }
+        //     )
+        //     .then(() => {
+        //       setIsOpen(false);
+        //       setQRCodeData("");
+        //     });
+        // } catch (error: any) {
+        //   console.log("WhatsApp Error: " + error.response.data.error);
+        // }
       }
 
       if (messages) {
@@ -130,7 +136,7 @@ const MessageInput = ({
         const updatedMessages = [NewMessage];
         setMessages(updatedMessages);
       }
-
+      
       setloading(false);
       setMessageBody("");
     } catch (error) {

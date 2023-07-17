@@ -36,7 +36,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const isDesktop = useBreakpointValue({ base: false, sm: true });
 
   return (
-    <Box width="100%" height={"90%"}>
+    <Box width="100%" height={"78%"}>
       {isDesktop ? (
         <Box
           py={2}
@@ -101,7 +101,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       )}
       <ConversationModal session={session} isOpen={isOpen} onClose={onClose} />
       {isDesktop ? (
-        <Flex direction={"column"} overflowY="scroll" maxHeight={"90%"}>
+        <Flex px={4} direction={"column"} overflowY="auto" maxHeight={"90%"}>
           {items.map((item: GetSearchedUser) => {
             return (
               <ConversationItem
@@ -115,7 +115,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
         </Flex>
       ) : (
         // <Flex direction={"row"} overflowX="scroll" maxHeight={"90%"}>
-        <>
           <Flex
             direction="row"
             mt={{ sm: 7, base: 3 }}
@@ -141,7 +140,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
               </Stack>
             ))}
           </Flex>
-        </>
       )}
     </Box>
   );
