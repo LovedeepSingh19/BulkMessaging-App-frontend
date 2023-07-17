@@ -104,29 +104,7 @@ const MessageInput = ({
         const { qr } = response.data;
 
         setQRCodeData(qr);
-
-        setTimeout(() => {
-          // Perform your task here
-          setIsOpen(false);
-          setQRCodeData("");
-        }, 10000);
-        // try {
-        //   await axios
-        //     .post(
-        //       `${apiUrl}/qr-whatsApp`,
-        //       {
-        //         phones: phones,
-        //         messages: messages,
-        //       },
-        //       { headers: { "Content-Type": "application/json" } }
-        //     )
-        //     .then(() => {
-        //       setIsOpen(false);
-        //       setQRCodeData("");
-        //     });
-        // } catch (error: any) {
-        //   console.log("WhatsApp Error: " + error.response.data.error);
-        // }
+        
       }
 
       if (messages) {
