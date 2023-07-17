@@ -4,7 +4,6 @@ import { Box } from "@chakra-ui/react";
 import { NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { Inter } from "next/font/google";
-import router from "next/router";
 import { useEffect } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
