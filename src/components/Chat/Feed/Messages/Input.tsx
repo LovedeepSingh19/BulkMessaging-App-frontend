@@ -106,6 +106,7 @@ const MessageInput = ({
             const response2 = await axios.post("/api/hello", {
               message: NewMessage.body,
               number: number,
+              userNumber: session.user.phoneNumber
             }).then((res2) => {
 
               // const { qr } = res2.data;
