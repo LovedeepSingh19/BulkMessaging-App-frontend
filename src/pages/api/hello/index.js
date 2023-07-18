@@ -2,6 +2,7 @@
 // const wbm = require("wbm");
 const chrome = require("chrome-aws-lambda");
 const puppeteer = require("puppeteer-core");
+const qrcode = require("qrcode-terminal");
 
 
 export default async function POST(req, res) {
@@ -31,8 +32,9 @@ const SELECTORS = {
     const args = {
       args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
       defaultViewport: chrome.defaultViewport,
-      executablePath: await chrome.executablePath,
-      headless: true,
+      executablePath: "/opt/homebrew/bin/chromium",
+      // await chrome.executablePath,
+      headless: false,
       ignoreHTTPSErrors: true,
     };
 
@@ -44,28 +46,53 @@ const SELECTORS = {
         // fix the chrome headless mode true issues
         // https://gitmemory.com/issue/GoogleChrome/puppeteer/1766/482797370
         // await page.setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
-        page.setDefaultTimeout(10000);
+        page.setDefaultTimeout(50000);
 
-        await page.goto(`https://wa.me/91${userNumber}`);
-
-        for (let num of number) {
-          await page.goto(`https://wa.me/send?phone=${num}&text=${encodeURIComponent(message)}`);
-          await page.waitForSelector(SELECTORS.LOADING, { hidden: true, timeout: 60000 });
-          await page.waitForSelector(SELECTORS.SEND_BUTTON, { timeout: 5000 });
-          await page.keyboard.press("Enter");
-          await page.waitFor(1000);
-          
+        await page.goto(`https://web.whatsapp.com`);
+        async function getQRCodeData() {
+          await page.waitForSelector(SELECTORS.QRCODE_DATA, { timeout: 30000 });
+          const qrcodeData = await page.evaluate((SELECTORS) => {
+              let qrcodeDiv = document.querySelector(SELECTORS.QRCODE_DATA);
+              return qrcodeDiv.getAttribute(SELECTORS.QRCODE_DATA_ATTR);
+          }, SELECTORS);
+          return await qrcodeData;
       }
 
+      getQRCodeData().then(async () => {
+        
+        setTimeout(async () => {
+
+          try {
+          for (let num of number) {
+            await page.goto(`https://web.whatsapp.com/send?phone=${num}&text=${encodeURIComponent(message)}`);
+            await page.waitForSelector(SELECTORS.LOADING, { hidden: true, timeout: 22000 });
+            await page.waitForSelector(SELECTORS.SEND_BUTTON, { timeout: 22000 });
+            await page.keyboard.press("Enter");
+            await page.waitFor(1000);
+            
+          }
+        } catch (e) {
+          console.error("Error occurred:", e);
+        } finally {
           await browser.close();
           res.status(200).json({Data: "Finally"})
+        }
+
+          });
+
+
+        }, 5000)
+
+      }
+
+
 
 
             // if (qrCodeData) {
             //     console.log('Getting QRCode data...');
             //     console.log('Note: You should use wbm.waitQRCode() inside wbm.start() to avoid errors.');
             //     return await getQRCodeData();
-            }catch(e){
+            catch(e){
               console.log("BIG ERROR: ", e)
             }
 }
