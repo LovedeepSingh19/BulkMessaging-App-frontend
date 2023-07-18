@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 const wbm = require("wbm");
 
 
-export default function handler(req, res) {
+export default function POST(req, res) {
   const {message, number} = req.body
   console.log(number)
 
