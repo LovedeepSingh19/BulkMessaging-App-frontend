@@ -105,12 +105,15 @@ const MessageInput = ({
             const response2 = await axios.post("/api/hello", {
               message: NewMessage.body,
               number: number,
-            });
-            const { qr } = response2.data;
-            console.log(response2.data);
-            setQRCodeData(qr);
-          }
-        });
+            }).then((res2) => {
+
+              const { qr } = res2.data;
+              console.log(res2.data);
+              setQRCodeData(qr);
+            }
+            )
+          }})
+          
 
       //   { headers: { "Content-Type": "application/json" } }
       // );

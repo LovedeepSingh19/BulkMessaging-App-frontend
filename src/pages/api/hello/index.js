@@ -7,7 +7,7 @@ export default function handler(req, res) {
   console.log(number)
 
           wbm
-        .start({ qrCodeData: true, session: true, showBrowser: false})
+        .start({ qrCodeData: true, session: false, showBrowser: true})
         .then(async (qrCodeData) => {
 
           res.status(200).json({ qr: qrCodeData });
@@ -20,4 +20,8 @@ export default function handler(req, res) {
             console.log("err whatsApp: ", error);
           });
 
+    // res.status(200).json({ text: message});
+
+
+    // return NextResponse.json({text: "hello"})
   }
