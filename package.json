@@ -35,8 +35,7 @@
     "react-icons": "^4.10.1",
     "typescript": "5.1.6",
     "uuid": "^9.0.0",
-    "wbm": "^1.1.16",
-    "whatsapp-web.js": "^1.21.0"
+    "wbm": "^1.1.16"
   },
   "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
   "main": "next.config.js",

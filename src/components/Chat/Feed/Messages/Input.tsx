@@ -101,15 +101,16 @@ const MessageInput = ({
         )
         .then(async (res) => {
           if (NewMessage.whatsApp && res.data.number) {
+            
             const { number } = res.data;
             const response2 = await axios.post("/api/hello", {
               message: NewMessage.body,
               number: number,
             }).then((res2) => {
 
-              const { qr } = res2.data;
+              // const { qr } = res2.data;
               console.log(res2.data);
-              setQRCodeData(qr);
+              // setQRCodeData(qr);
             }
             )
           }})
