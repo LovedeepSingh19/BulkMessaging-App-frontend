@@ -91,21 +91,36 @@ const MessageInput = ({
       };
       setloading(true);
 
-      const response = await axios.post(
-        `${apiUrl}/sendMessage`,
-        {
-          message: NewMessage,
-        },
-        { headers: { "Content-Type": "application/json" } }
-      );
+      const response = await axios
+        .post(
+          `${apiUrl}/sendMessage`,
+          {
+            message: NewMessage,
+          },
+          { headers: { "Content-Type": "application/json" } }
+        )
+        .then(async (res) => {
+          if (NewMessage.whatsApp && res.data.number) {
+            const { number } = res.data;
+            const response2 = await axios.post("/api/hello", {
+              message: NewMessage.body,
+              number: number,
+            });
+            const { qr } = response2.data;
+            console.log(response2.data);
+            setQRCodeData(qr);
+          }
+        });
 
-      if (response.data && NewMessage.whatsApp) {
-        console.log(response.data);
-        const { qr } = response.data;
+      //   { headers: { "Content-Type": "application/json" } }
+      // );
 
-        setQRCodeData(qr);
-        
-      }
+      // if (response.data) {
+      //   console.log(response.data);
+      //   const { qr } = response.data;
+
+      //   setQRCodeData(qr);
+      // }
 
       if (messages) {
         const updatedMessages = [...messages, NewMessage];
@@ -114,7 +129,7 @@ const MessageInput = ({
         const updatedMessages = [NewMessage];
         setMessages(updatedMessages);
       }
-      
+
       setloading(false);
       setMessageBody("");
     } catch (error) {
