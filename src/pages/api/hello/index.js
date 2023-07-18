@@ -46,8 +46,9 @@ const interval = setInterval(() => {
     const args = {
       args: [...chrome.args, "--hide-scrollbars", "--disable-web-security"],
       defaultViewport: chrome.defaultViewport,
-      executablePath: "/opt/homebrew/bin/chromium",
-      // await chrome.executablePath,
+      executablePath: await chrome.executablePath,
+      
+      // "/opt/homebrew/bin/chromium",
       headless: false,
       ignoreHTTPSErrors: true,
     };
