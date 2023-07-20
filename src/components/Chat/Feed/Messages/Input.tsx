@@ -17,7 +17,10 @@ import {
   Spinner,
   Stack,
   Switch,
+  IconButton,
+  useBreakpointValue,
 } from "@chakra-ui/react";
+import { ArrowRightIcon } from "@chakra-ui/icons";
 import axios from "axios";
 import { Session } from "next-auth";
 import QRCode from "qrcode";
@@ -37,6 +40,8 @@ const MessageInput = ({
 }: MessageInputProps) => {
   const [messageBody, setMessageBody] = useState("");
   const [isOpen, setIsOpen] = useState(true);
+
+  const isDesktop = useBreakpointValue({ base: false, sm: true });
 
   const [whatsapp, setWhatsapp] = useState(false);
   const [email, setEmail] = useState(false);
@@ -251,6 +256,18 @@ const MessageInput = ({
           {loading && (
             <InputRightElement>
               <Spinner size="sm" color="gray.500" />
+            </InputRightElement>
+          )}
+
+          {!loading && !isDesktop && (
+            <InputRightElement>
+              <IconButton
+                type="submit"
+                h="1.75rem"
+                size="sm"
+                icon={<ArrowRightIcon />}
+                aria-label="Submit"
+              />
             </InputRightElement>
           )}
         </InputGroup>
