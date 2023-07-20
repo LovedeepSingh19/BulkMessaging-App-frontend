@@ -13,7 +13,7 @@ const Participants: React.FC<ParticipantsProps> = ({
   removeParticipant,
 }) => {
     return (
-        <Flex direction="row" mt={8} flexWrap="wrap" gap="10px">
+        <Flex direction="row" mt={8} overflowX={participants.length > 8 ? "auto" : "hidden"} flexWrap={participants.length > 8 ?"unset":"wrap"} gap={participants.length > 8 ? "12px" :"10px"}>
           {participants.map((participant) => (
             <Stack
               key={participant.id}
@@ -22,12 +22,13 @@ const Participants: React.FC<ParticipantsProps> = ({
               bg="whiteAlpha.200"
               borderRadius={4}
               p={2}
+              // pb={participants.length > 8 ? 0: 2}
             >
               <Text>{participant.username}</Text>
               <IoIosCloseCircleOutline
-                size={20}
+                size={participants.length > 8 ? 40:20 }
                 cursor="pointer"
-                onClick={() => removeParticipant(participant.id)}
+                onClick={() => removeParticipant(participant.email)}
               />
             </Stack>
           ))}
