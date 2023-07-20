@@ -118,7 +118,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
           <Flex
             direction="row"
             mt={{ sm: 7, base: 3 }}
-            flexWrap="wrap"
+            // flexWrap="wrap"
+            overflowX={items.length > 8 ? "auto" : "hidden"} flexWrap={items.length > 8 ?"unset":"wrap"}
             gap="10px"
           >
             <Divider />
@@ -129,13 +130,15 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 align="center"
                 bg="whiteAlpha.200"
                 borderRadius={4}
+                justifyContent={'center'}
+                minW="100px"
                 p={2}
+                cursor="pointer"
+                  onClick={() => onDeleteitem(item.email)}
               >
                 <Text fontSize={12}>{item.username}</Text>
                 <IoIosCloseCircleOutline
                   size={15}
-                  cursor="pointer"
-                  onClick={() => onDeleteitem(item.email)}
                 />
               </Stack>
             ))}

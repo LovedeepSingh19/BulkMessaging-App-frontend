@@ -37,7 +37,6 @@ import { GetSearchedUser } from "@/util/types";
         justify="space-between"
         mb={1}
         p={4}
-        cursor="pointer"
         borderRadius={4}
         bg={ "whiteAlpha.200"}
         // : "none"
