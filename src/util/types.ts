@@ -56,7 +56,11 @@ export interface SendMessageVariables {
   body: string;
   whatsApp: boolean;
   sms: boolean;
-  email: boolean
+  email: boolean;
+  google_app_password?: string,
+  sms_account_SID?: string,
+  sms_auth_token?: string,
+  sms_service_SID?: string,
 }
 
 

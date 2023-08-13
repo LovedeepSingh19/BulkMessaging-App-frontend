@@ -1,10 +1,11 @@
-import { Button, Flex } from "@chakra-ui/react";
+import InstructionBox from "@/util/instructions-box";
+import { GetSearchedUser } from "@/util/types";
+import { Flex } from "@chakra-ui/react";
+import axios from "axios";
+import { Session } from "next-auth";
+import { useEffect, useState } from "react";
 import ConversationWrapper from "./Conversations/ConversationWrapper";
 import FeedWrapper from "./Feed/FeedWrapper";
-import { Session } from "next-auth";
-import { GetSearchedUser } from "@/util/types";
-import axios from "axios";
-import { useState, useEffect } from "react";
 
 interface ChatProps {
   session: Session;
@@ -64,19 +65,25 @@ const Chat: React.FC<ChatProps> = ({ session }) => {
     }
   };
 
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
-    <Flex height="100vh">
-      <ConversationWrapper
-        session={session}
-        items={items}
-        onDeleteitem={onDeleteitem}
-      />
-      <FeedWrapper
-        session={session}
-        items={items}
-        onDeleteitem={onDeleteitem}
-      />
-    </Flex>
+    <>
+      <InstructionBox isOpen={isOpen} setIsOpen={setIsOpen} />
+      <Flex height="100vh">
+        <ConversationWrapper
+          session={session}
+          items={items}
+          onDeleteitem={onDeleteitem}
+        />
+        <FeedWrapper
+          helpIsOpen={setIsOpen}
+          session={session}
+          items={items}
+          onDeleteitem={onDeleteitem}
+        />
+      </Flex>
+    </>
   );
 };
 export default Chat;

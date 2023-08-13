@@ -19,6 +19,9 @@ import {
   Switch,
   IconButton,
   useBreakpointValue,
+  FormErrorMessage,
+  Alert,
+  AlertTitle,
 } from "@chakra-ui/react";
 import { ArrowRightIcon } from "@chakra-ui/icons";
 import axios from "axios";
@@ -26,6 +29,7 @@ import { Session } from "next-auth";
 import QRCode from "qrcode";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { throws } from "assert";
 
 interface MessageInputProps {
   session: Session;
@@ -38,7 +42,10 @@ const MessageInput = ({
   setMessages,
   messages,
 }: MessageInputProps) => {
+  var NewMessage: SendMessageVariables;
+
   const [messageBody, setMessageBody] = useState("");
+  const [email_code, set_email_code] = useState("");
   const [isOpen, setIsOpen] = useState(true);
 
   const isDesktop = useBreakpointValue({ base: false, sm: true });
@@ -50,6 +57,7 @@ const MessageInput = ({
   const [qrCodeData, setQRCodeData] = useState("");
   const [qrCodeImage, setQRCodeImage] = useState("");
   const [loading, setloading] = useState(false);
+  const [error, seterror] = useState('');
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -84,17 +92,37 @@ const MessageInput = ({
     event.preventDefault();
     try {
       const randomKey = uuidv4();
+      if (email) {
+        NewMessage = {
+          timeStamp: Date.now(),
+          _id: randomKey,
+          createdBy: session.user?.email!,
+          body: messageBody,
+          whatsApp: whatsapp,
+          sms: sms,
+          email: email,
+          google_app_password: email_code,
+        };
+        if(email_code === ''){
+          seterror('please fill all the fields')
+          // throw new Error("Fill all the fields please");
+          return
+          
+        }
+      } else {
+        NewMessage = {
+          timeStamp: Date.now(),
+          _id: randomKey,
+          createdBy: session.user?.email!,
+          body: messageBody,
+          whatsApp: whatsapp,
+          sms: sms,
+          email: email,
+        };
+      }
 
-      const NewMessage: SendMessageVariables = {
-        timeStamp: Date.now(),
-        _id: randomKey,
-        createdBy: session.user?.email!,
-        body: messageBody,
-        whatsApp: whatsapp,
-        sms: sms,
-        email: email,
-      };
       setloading(true);
+      seterror('')
 
       const response = await axios.post(
         `${apiUrl}/sendMessage`,
@@ -134,6 +162,37 @@ const MessageInput = ({
       borderColor="whiteAlpha.200"
     >
       <form onSubmit={onSendMessage}>
+        {email && (
+          <>
+            {!isDesktop && (
+              <Box
+                pb={2}
+                pl={20}
+                width={"80%"}
+                bg={"gray.800"}
+                borderRadius="full"
+                boxShadow={"none"}
+                cursor="pointer"
+              >
+                <Input
+                  value={email_code}
+                  placeholder="Email Code"
+                  disabled={loading}
+                  resize="none"
+                  _focus={{
+                    boxShadow: "none",
+                    border: "1px solid",
+                    borderColor: "whiteAlpha.300",
+                  }}
+                  onChange={(event) => {
+                    set_email_code(event.target.value);
+                  }}
+                  size="md"
+                />
+              </Box>
+            )}
+          </>
+        )}
         <Stack direction="row" spacing={4} pb={3} alignItems="center">
           <HStack spacing={1} alignItems="center">
             <FormLabel
@@ -235,6 +294,35 @@ const MessageInput = ({
                 onChange={() => handleSwitchChange("sms")}
               />
             </Box>
+            {email && (
+              <>
+                {isDesktop && (
+                  <Box
+                    pl={10}
+                    bg={"gray.800"}
+                    borderRadius="full"
+                    boxShadow={"none"}
+                    cursor="pointer"
+                  >
+                    <Input
+                      value={email_code}
+                      placeholder="Email Code"
+                      disabled={loading}
+                      resize="none"
+                      _focus={{
+                        boxShadow: "none",
+                        border: "1px solid",
+                        borderColor: "whiteAlpha.300",
+                      }}
+                      onChange={(event) => {
+                        set_email_code(event.target.value);
+                      }}
+                      size="md"
+                    />
+                  </Box>
+                )}
+              </>
+            )}
           </HStack>
         </Stack>
         <InputGroup>
@@ -259,7 +347,7 @@ const MessageInput = ({
             </InputRightElement>
           )}
 
-          {!loading && !isDesktop && (
+          {!loading && (
             <InputRightElement>
               <IconButton
                 type="submit"
@@ -271,6 +359,12 @@ const MessageInput = ({
             </InputRightElement>
           )}
         </InputGroup>
+        {(error!=='') && (
+
+        <Alert borderRadius={10} mt={2}>
+            <AlertTitle>{error}</AlertTitle>
+            </Alert>
+        )}
       </form>
     </Box>
   );
