@@ -53,7 +53,7 @@ const Auth: React.FC<AuthProps> = ({ session, reloadSession }) => {
               onChange={(event) => setPhoneNumber(event.target.value)}
             />
             <Button onClick={onSubmit}>Save</Button>
-            <Text fontSize={10} fontWeight={600} pt={10}>Server is Slow please wait a min</Text>
+            <Text fontSize={12} fontWeight={600} pt={5}>Server is Slow please wait a min</Text>
           </>
         ) : (
           <>
